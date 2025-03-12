@@ -1,8 +1,8 @@
 # Projeto de Controle de Buzzer na BitDogLab
 
-![Virtus](images/VirtusCC.png)
-
----
+<p align="center">
+  <img src="images/VirtusCC.png" alt="Virtus">
+</p>
 
 ## Autores
 
