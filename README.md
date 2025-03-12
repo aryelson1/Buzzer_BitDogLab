@@ -1,51 +1,39 @@
-# Controle de Buzzer na BitDogLab
+# Projeto de Controle de Buzzer na BitDogLab
+
+![](images/VirtusCC.png)
+
+## Autores
+
+- Aryelson Gonçalves [https://github.com/aryelson1]
+- Guilherme Santos [https://github.com/GuilhermexL]
 
 Este projeto implementa um controle de buzzer utilizando a BitDogLab, com suporte para tons personalizados, melodias e interrupção via botão.
 
-## 📌 Funcionalidades
+## Montagem do Projeto
+
+![](images/Placa_profile.png)
+
+## Hardware Utilizados
+
+- Placa Bitdoglab
+- Buzzer ativo/passivo
+- Botões (para ativar e interromper o som)
+- Jumpers e protoboard
+
+## Conexões
+
+- Buzzer: Pino GPIO21
+- Botão 1: Pino GPIO5
+- Botão 2: Pino GPIO6
+
+## Funcionalidades
+
 - Geração de sons utilizando PWM.
 - Emissão de tons personalizados e melodias.
 - Interrupção do som ao pressionar um botão.
 - Reprodução do hino do Flamengo.
 
-## 🛠️ Hardware Utilizado
-- Raspberry Pi Pico
-- Buzzer ativo/passivo
-- Botões (para ativar e interromper o som)
-- Jumpers e protoboard
-
-## 📜 Estrutura do Código
-```
-├── inc/
-│   ├── buzzer.h  # Cabeçalho das funções do buzzer
-│   ├── buzzer.c  # Implementação das funções do buzzer
-├── src/
-│   ├── main.c    # Código principal
-├── README.md     # Documentação do projeto
-```
-
-## 🚀 Como Compilar e Executar
-1. Clone este repositório:
-   ```sh
-   git clone https://github.com/aryelson1/Buzzer_BitDogLab.git
-   cd Buzzer_BitDogLab
-   ```
-2. Compile o código utilizando o SDK do Raspberry Pi Pico:
-   ```sh
-   mkdir build && cd build
-   cmake ..
-   make
-   ```
-3. Envie o arquivo `.uf2` gerado para o Raspberry Pi Pico.
-
-## 🔧 Configuração dos Pinos
-| Componente | Pino do Pico |
-|------------|-------------|
-| Buzzer     | GP21        |
-| Botão 1    | GP5         |
-| Botão 2    | GP6         |
-
-## 📖 Documentação das Funções
+## Documentação das Funções
 
 ### `pwm_init_buzzer(uint pin)`
 Inicializa o PWM no pino do buzzer.
@@ -74,6 +62,32 @@ Para qualquer som ativo no buzzer.
 ### `play_flamengo_anthem(uint pin)`
 Toca o hino do Flamengo.
 
-## 📝 Licença
-Este projeto é de código aberto e pode ser usado conforme necessário.
+## Instruções
 
+# Como Compilar e Executar
+
+1. Requisitos:
+
+- Visual Studio Code
+- Extensão Rapsberry Pi Pico
+
+2. Compilação:
+
+- Importe o projeto pela interface da extensão e coloque a versão 1.5.1
+
+3. Execução:
+
+- Conecte a Raspberry Pi Pico ao computador via USB.
+- Carregue o arquivo .uf2 gerado na Pico, ou instale o zadig para executar diretamente do VSCode.
+
+4. Interação:
+
+- Clique no botão para emitir som no Buzzer.
+
+## Conclusão
+
+
+
+## Referências
+
+- Raspberry Pi Pico SDK [https://github.com/raspberrypi/pico-sdk]
