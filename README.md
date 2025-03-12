@@ -32,7 +32,6 @@ Este projeto implementa um controle de buzzer utilizando a placa BitDogLab, com 
 - 1x Placa BitDogLab
 - Buzzer (ativo ou passivo)
 - 2 Botões (para ativar e interromper o som)
-- 1x Jumpers e protoboard
 
 2. Conexões
 
