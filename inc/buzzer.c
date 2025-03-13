@@ -1,17 +1,17 @@
 #include "buzzer.h"
 
-int stop_buzzer = 0;  // Variável global para controlar a interrupção do buzzer
+int stop_buzzer = 0; // Variável global para controlar a interrupção do buzzer
 
 // Função para inicializar o PWM no pino do buzzer
-void buzzer_init(uint pin){
-    
+void buzzer_init(uint pin)
+{
+
     // Configuração do GPIO para o buzzer como saída
     gpio_init(pin);
     gpio_set_dir(pin, GPIO_OUT);
 
     // Inicializar o PWM no pino do buzzer
     pwm_init_buzzer(pin);
-
 }
 
 // Função para inicializar o PWM no pino do buzzer
@@ -35,7 +35,8 @@ void pwm_init_buzzer(uint pin)
 void setFrequency(uint pin, uint frequency)
 {
     // Evita divisão por zero
-    if (frequency == 0) return;
+    if (frequency == 0)
+        return;
 
     // Obtém o slice do PWM associado ao pino
     uint slice_num = pwm_gpio_to_slice_num(pin);
@@ -117,12 +118,14 @@ void play_two_buzzer(uint pin_A, uint pin_B, uint melody_A[], uint melody_B[], u
         }
 
         // Toca a nota atual no buzzer A (se houver)
-        if (melody_A[i] > 0) {
+        if (melody_A[i] > 0)
+        {
             playTone(pin_A, melody_A[i], durations[i]);
         }
 
         // Toca a nota atual no buzzer B (se houver)
-        if (melody_B[i] > 0) {
+        if (melody_B[i] > 0)
+        {
             playTone(pin_B, melody_B[i], durations[i]);
         }
 
@@ -211,44 +214,59 @@ void marcha_imperial()
 {
     // Definição das notas e durações
     Nota notas[] = {
-        {392, 0, 0.2},   // G
-        {392, 392, 0.2}, // Harmonia G em ambos
-        {392, 0, 0.2},   // G
-        {311, 0, 0.15},  // Eb
-        {466, 0, 0.1},   // Bb
-        {392, 0, 0.2},   // G
-        {311, 311, 0.15},// Harmonia Eb em ambos
-        {466, 0, 0.1},   // Bb
-        {392, 0, 0.4},   // G
-        {587, 0, 0.2},   // D
-        {587, 587, 0.2}, // Harmonia D em ambos
-        {587, 0, 0.2},   // D
-        {622, 0, 0.15},  // Eb
-        {466, 0, 0.1},   // Bb
-        {369, 0, 0.2},   // G#
-        {311, 311, 0.15},// Harmonia Eb em ambos
-        {466, 0, 0.1},   // Bb
-        {392, 392, 0.4}  // Harmonia G em ambos
+        {392, 0, 0.2},    // G
+        {392, 392, 0.2},  // Harmonia G em ambos
+        {392, 0, 0.2},    // G
+        {311, 0, 0.15},   // Eb
+        {466, 0, 0.1},    // Bb
+        {392, 0, 0.2},    // G
+        {311, 311, 0.15}, // Harmonia Eb em ambos
+        {466, 0, 0.1},    // Bb
+        {392, 0, 0.4},    // G
+        {587, 0, 0.2},    // D
+        {587, 587, 0.2},  // Harmonia D em ambos
+        {587, 0, 0.2},    // D
+        {622, 0, 0.15},   // Eb
+        {466, 0, 0.1},    // Bb
+        {369, 0, 0.2},    // G#
+        {311, 311, 0.15}, // Harmonia Eb em ambos
+        {466, 0, 0.1},    // Bb
+        {392, 392, 0.4}   // Harmonia G em ambos
     };
 
     // Toca a sequência de notas
-    for(int rep = 0; rep < 5; rep++){
-        for (int i = 0; i < sizeof(notas) / sizeof(notas[0]); i++) {
-            if (notas[i].frequencia_B > 0) {
+    for (int rep = 0; rep < 5; rep++)
+    {
+        for (int i = 0; i < sizeof(notas) / sizeof(notas[0]); i++)
+        {
+            // Verifica se o buzzer deve ser interrompido
+            if (stop_buzzer)
+            {
+                pwm_set_gpio_level(BUZZER_PIN, 0); // Desativa o sinal PWM
+                pwm_set_gpio_level(BUZZER_PIN2, 0); // Desativa o sinal PWM
+
+                return;                     // Sai da função
+            }
+
+            if (notas[i].frequencia_B > 0)
+            {
                 // Toca harmonia
                 tocar_harmonia(BUZZER_PIN, BUZZER_PIN2, notas[i].frequencia_A, notas[i].frequencia_B, notas[i].duracao);
-            } else {
+            }
+            else
+            {
                 // Toca nota única no buzzer A
                 tocar_nota(BUZZER_PIN, notas[i].frequencia_A, notas[i].duracao);
             }
         }
     }
-    
 }
 
 // Função para tocar uma nota em um buzzer
-void tocar_nota(uint pin, uint frequencia, float duracao) {
-    if (frequencia > 0) { // Verifica se a frequência é válida
+void tocar_nota(uint pin, uint frequencia, float duracao)
+{
+    if (frequencia > 0)
+    { // Verifica se a frequência é válida
         // Configura o PWM para a frequência desejada
         gpio_set_function(pin, GPIO_FUNC_PWM);
         uint slice_num = pwm_gpio_to_slice_num(pin);
@@ -262,16 +280,20 @@ void tocar_nota(uint pin, uint frequencia, float duracao) {
 
         // Desliga o buzzer
         pwm_set_chan_level(slice_num, pwm_gpio_to_channel(pin), 0);
-    } else {
+    }
+    else
+    {
         // Para frequências inválidas, apenas faz uma pausa
         sleep_ms((uint)(duracao * 1000));
     }
 }
 
 // Função para tocar harmonias (notas simultâneas em dois buzzers)
-void tocar_harmonia(uint pin_A, uint pin_B, uint frequencia_A, uint frequencia_B, float duracao) {
+void tocar_harmonia(uint pin_A, uint pin_B, uint frequencia_A, uint frequencia_B, float duracao)
+{
     // Configura o PWM para o buzzer A
-    if (frequencia_A > 0) {
+    if (frequencia_A > 0)
+    {
         gpio_set_function(pin_A, GPIO_FUNC_PWM);
         uint slice_num_A = pwm_gpio_to_slice_num(pin_A);
         pwm_set_clkdiv(slice_num_A, clock_get_hz(clk_sys) / (frequencia_A * 4096));
@@ -281,7 +303,8 @@ void tocar_harmonia(uint pin_A, uint pin_B, uint frequencia_A, uint frequencia_B
     }
 
     // Configura o PWM para o buzzer B
-    if (frequencia_B > 0) {
+    if (frequencia_B > 0)
+    {
         gpio_set_function(pin_B, GPIO_FUNC_PWM);
         uint slice_num_B = pwm_gpio_to_slice_num(pin_B);
         pwm_set_clkdiv(slice_num_B, clock_get_hz(clk_sys) / (frequencia_B * 4096));
@@ -294,11 +317,13 @@ void tocar_harmonia(uint pin_A, uint pin_B, uint frequencia_A, uint frequencia_B
     sleep_ms((uint)(duracao * 1000));
 
     // Desliga os buzzers
-    if (frequencia_A > 0) {
+    if (frequencia_A > 0)
+    {
         uint slice_num_A = pwm_gpio_to_slice_num(pin_A);
         pwm_set_chan_level(slice_num_A, pwm_gpio_to_channel(pin_A), 0);
     }
-    if (frequencia_B > 0) {
+    if (frequencia_B > 0)
+    {
         uint slice_num_B = pwm_gpio_to_slice_num(pin_B);
         pwm_set_chan_level(slice_num_B, pwm_gpio_to_channel(pin_B), 0);
     }

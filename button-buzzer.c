@@ -47,7 +47,7 @@ int main()
 
             // Botão pressionado (nível lógico baixo)
             printf("Button pressed\n");
-
+            stop_buzzer = 0;
             // Melodia para o buzzer A (notas em Hz)
             uint melody_A[] = {392, 392, 0, 311, 466, 392, 0, 466, 392, 587, 587, 0, 622, 466, 369, 0, 466, 392};
 
