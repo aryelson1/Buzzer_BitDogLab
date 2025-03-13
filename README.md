@@ -20,6 +20,7 @@ Este projeto implementa um controle de buzzer utilizando a placa BitDogLab, com 
 - Emissão de tons personalizados e melodias.
 - Interrupção do som ao pressionar um botão.
 - Reprodução do hino do Flamengo.
+- Reprodução da Marcha Imperial.
 
 ---
 
