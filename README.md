@@ -110,6 +110,55 @@ O projeto oferece as seguintes funcionalidades, implementadas através de funç�
 
 ---
 
+## Casos de Teste para o Buzzer
+
+### 1. **Teste de Variação de Frequência**
+   - **Objetivo**: Verificar se o buzzer é capaz de reproduzir tons em uma ampla faixa de frequências.
+   - **Passos**:
+     1. Inicializa o buzzer com `pwm_init_buzzer(pin)`.
+     2. Aumenta a frequência gradualmente de 20 Hz até 5000 Hz, com incrementos de 10 Hz.
+     3. Toca cada frequência por 100 ms, com um pequeno atraso de 50 ms entre as notas.
+     4. Verifica se o buzzer para imediatamente caso a variável `stop_buzzer` seja verdadeira.
+   - **Resultado Esperado**: O buzzer emite tons em frequências crescentes, começando em 20 Hz e terminando em 5000 Hz, ou para imediatamente se `stop_buzzer` for ativado.
+
+---
+
+## Casos de Teste
+
+### Teste de Variação de Frequência
+Este teste verifica se o buzzer é capaz de reproduzir tons em uma ampla faixa de frequências, desde 20 Hz até 5000 Hz. O teste aumenta a frequência gradualmente, com incrementos de 10 Hz, e toca cada frequência por 100 ms. Caso a variável `stop_buzzer` seja ativada, o buzzer para imediatamente.
+
+#### Passos:
+1. Inicializa o buzzer com `pwm_init_buzzer(pin)`.
+2. Aumenta a frequência de 20 Hz até 5000 Hz, com incrementos de 10 Hz.
+3. Toca cada frequência por 100 ms, com um atraso de 50 ms entre as notas.
+4. Verifica se o buzzer para imediatamente caso `stop_buzzer` seja verdadeiro.
+
+#### Resultado Esperado:
+- O buzzer emite tons em frequências crescentes, começando em 20 Hz e terminando em 5000 Hz.
+- O buzzer para imediatamente se `stop_buzzer` for ativado.
+
+---
+
+### Exemplo de Uso no Código
+
+Aqui está um exemplo de como você pode chamar o teste no seu código principal:
+
+```c
+#ifndef BUZZER_TEST_H
+#define BUZZER_TEST_H
+
+#include "pico/stdlib.h"
+#include "../inc/buzzer.h"
+
+// Declaração da função de teste do buzzer
+void test_buzzer(uint pin);
+
+#endif // BUZZER_TEST_H
+```
+
+---
+
 ## Como Compilar e Executar
 
 ### Requisitos
