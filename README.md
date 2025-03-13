@@ -35,7 +35,8 @@ Este projeto implementa um controle de buzzer utilizando a placa BitDogLab, com 
 
 2. Conexões
 
-- Buzzer: Pino GPIO21
+- Buzzer1: Pino GPIO21
+- Buzzer2: Pino GPIO28
 - Botão 1: Pino GPIO5
 - Botão 2: Pino GPIO6
 
@@ -107,6 +108,35 @@ O projeto oferece as seguintes funcionalidades, implementadas através de funç�
 - [ ] **Detalhes:**
   - Utiliza a função `playMelody` para reproduzir a melodia do hino.
   - Inclui as frequências e durações das notas do hino.
+
+### `void play_two_buzzer(uint pin_A, uint pin_B, uint melody_A[], uint melody_B[], uint durations[], uint length)`
+
+- [ ] **Descrição:** Permite tocar uma melodia simultaneamente em dois buzzers, com notas diferentes para cada um.
+- [ ] **Detalhes:**
+  - Recebe dois arrays de frequências (melody_A e melody_B) e um array de durações (durations).
+  - Toca as notas dos arrays simultaneamente nos buzzers conectados aos pinos pin_A e pin_B.
+  - Se stop_buzzer for verdadeiro, interrompe a reprodução imediatamente.
+     
+### `marcha_imperial()`
+
+- [ ] **Descrição:** Toca a melodia da Marcha Imperial (tema de Star Wars) utilizando dois buzzers para criar harmonias.
+- [ ] **Detalhes:**
+  - Reproduz a melodia da Marcha Imperial 5 vezes.
+  - Utiliza dois buzzers para tocar notas simultâneas (harmonias) quando necessário.
+
+### `tocar_nota(uint pin, uint frequencia, float duracao)`
+
+- [ ] **Descrição:** Toca uma nota individual em um buzzer específico.
+- [ ] **Detalhes:**
+  - Configura o PWM para a frequência especificada e toca a nota pelo tempo definido.
+  - Se a frequência for 0, apenas faz uma pausa.
+
+### `tocar_harmonia(uint pin_A, uint pin_B, uint frequencia_A, uint frequencia_B, float duracao)`
+
+- [ ] **Descrição:** Toca duas notas simultaneamente em dois buzzers diferentes, criando uma harmonia.
+- [ ] **Detalhes:**
+  - Configura os dois buzzers para tocar as frequências especificadas simultaneamente.
+  - Se uma das frequências for 0, apenas o outro buzzer toca.
 
 ---
 
