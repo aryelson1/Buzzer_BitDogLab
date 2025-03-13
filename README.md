@@ -20,6 +20,7 @@ Este projeto implementa um controle de buzzer utilizando a placa BitDogLab, com 
 - Emissão de tons personalizados e melodias.
 - Interrupção do som ao pressionar um botão.
 - Reprodução do hino do Flamengo.
+- Reprodução da Marcha Imperial.
 
 ---
 
@@ -35,7 +36,8 @@ Este projeto implementa um controle de buzzer utilizando a placa BitDogLab, com 
 
 2. Conexões
 
-- Buzzer: Pino GPIO21
+- Buzzer1: Pino GPIO21
+- Buzzer2: Pino GPIO28
 - Botão 1: Pino GPIO5
 - Botão 2: Pino GPIO6
 
@@ -107,6 +109,84 @@ O projeto oferece as seguintes funcionalidades, implementadas através de funç�
 - [ ] **Detalhes:**
   - Utiliza a função `playMelody` para reproduzir a melodia do hino.
   - Inclui as frequências e durações das notas do hino.
+
+### `void play_two_buzzer(uint pin_A, uint pin_B, uint melody_A[], uint melody_B[], uint durations[], uint length)`
+
+- [ ] **Descrição:** Permite tocar uma melodia simultaneamente em dois buzzers, com notas diferentes para cada um.
+- [ ] **Detalhes:**
+  - Recebe dois arrays de frequências (melody_A e melody_B) e um array de durações (durations).
+  - Toca as notas dos arrays simultaneamente nos buzzers conectados aos pinos pin_A e pin_B.
+  - Se stop_buzzer for verdadeiro, interrompe a reprodução imediatamente.
+     
+### `marcha_imperial()`
+
+- [ ] **Descrição:** Toca a melodia da Marcha Imperial (tema de Star Wars) utilizando dois buzzers para criar harmonias.
+- [ ] **Detalhes:**
+  - Reproduz a melodia da Marcha Imperial 5 vezes.
+  - Utiliza dois buzzers para tocar notas simultâneas (harmonias) quando necessário.
+
+### `tocar_nota(uint pin, uint frequencia, float duracao)`
+
+- [ ] **Descrição:** Toca uma nota individual em um buzzer específico.
+- [ ] **Detalhes:**
+  - Configura o PWM para a frequência especificada e toca a nota pelo tempo definido.
+  - Se a frequência for 0, apenas faz uma pausa.
+
+### `tocar_harmonia(uint pin_A, uint pin_B, uint frequencia_A, uint frequencia_B, float duracao)`
+
+- [ ] **Descrição:** Toca duas notas simultaneamente em dois buzzers diferentes, criando uma harmonia.
+- [ ] **Detalhes:**
+  - Configura os dois buzzers para tocar as frequências especificadas simultaneamente.
+  - Se uma das frequências for 0, apenas o outro buzzer toca.
+
+---
+
+## Casos de Teste para o Buzzer
+
+### 1. **Teste de Variação de Frequência**
+   - **Objetivo**: Verificar se o buzzer é capaz de reproduzir tons em uma ampla faixa de frequências.
+   - **Passos**:
+     1. Inicializa o buzzer com `pwm_init_buzzer(pin)`.
+     2. Aumenta a frequência gradualmente de 20 Hz até 5000 Hz, com incrementos de 10 Hz.
+     3. Toca cada frequência por 100 ms, com um pequeno atraso de 50 ms entre as notas.
+     4. Verifica se o buzzer para imediatamente caso a variável `stop_buzzer` seja verdadeira.
+   - **Resultado Esperado**: O buzzer emite tons em frequências crescentes, começando em 20 Hz e terminando em 5000 Hz, ou para imediatamente se `stop_buzzer` for ativado.
+
+---
+
+## Casos de Teste
+
+### Teste de Variação de Frequência
+Este teste verifica se o buzzer é capaz de reproduzir tons em uma ampla faixa de frequências, desde 20 Hz até 5000 Hz. O teste aumenta a frequência gradualmente, com incrementos de 10 Hz, e toca cada frequência por 100 ms. Caso a variável `stop_buzzer` seja ativada, o buzzer para imediatamente.
+
+#### Passos:
+1. Inicializa o buzzer com `pwm_init_buzzer(pin)`.
+2. Aumenta a frequência de 20 Hz até 5000 Hz, com incrementos de 10 Hz.
+3. Toca cada frequência por 100 ms, com um atraso de 50 ms entre as notas.
+4. Verifica se o buzzer para imediatamente caso `stop_buzzer` seja verdadeiro.
+
+#### Resultado Esperado:
+- O buzzer emite tons em frequências crescentes, começando em 20 Hz e terminando em 5000 Hz.
+- O buzzer para imediatamente se `stop_buzzer` for ativado.
+
+---
+
+### Exemplo de Uso no Código
+
+Aqui está um exemplo de como você pode chamar o teste no seu código principal:
+
+```c
+#ifndef BUZZER_TEST_H
+#define BUZZER_TEST_H
+
+#include "pico/stdlib.h"
+#include "../inc/buzzer.h"
+
+// Declaração da função de teste do buzzer
+void test_buzzer(uint pin);
+
+#endif // BUZZER_TEST_H
+```
 
 ---
 
