@@ -63,5 +63,14 @@ int main()
         }
     }
 
+    // Executar os testes
+    test_beep_on_off();
+    test_play_tone();
+    test_countdown_beep();
+    test_play_melody();
+    test_play_flamengo_anthem();
+    test_stop();
+    test_button_interaction();
+
     return 0;
 }
