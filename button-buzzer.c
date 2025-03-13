@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "./inc/buzzer.h"
-
+#include "./tests/buzzer_test.h"
 
 void button2_callback(uint gpio, uint32_t events)
 {
@@ -23,43 +23,48 @@ int main()
     gpio_set_dir(BUTTON_PIN2, GPIO_IN);
     gpio_pull_up(BUTTON_PIN2);
 
-    // Configuração do GPIO para o buzzer como saída
-    gpio_init(BUZZER_PIN);
-    gpio_set_dir(BUZZER_PIN, GPIO_OUT);
-
-    // Inicializar o PWM no pino do buzzer
-    pwm_init_buzzer(BUZZER_PIN);
-
     // Configurar a interrupção no pino do botão
     gpio_set_irq_enabled_with_callback(BUTTON_PIN2, GPIO_IRQ_EDGE_FALL, true, &button2_callback);
 
-    // Exemplo de uso do beepOn e beepOff
-    beepOn(BUZZER_PIN, 1000); // Liga o buzzer em 1kHz
-    sleep_ms(1000);           // Mantém ligado por 1 segundo
-    beepOff(BUZZER_PIN);      // Desliga o buzzer
+    // Inicia o BUZZER 1
+    buzzer_init(BUZZER_PIN);
 
-    // Exemplo de uso do playTone
-    playTone(BUZZER_PIN, 500, 500); // Toca um tom de 500Hz por 500ms
+    // Inicia o BUZZER 2
+    buzzer_init(BUZZER_PIN2);
 
-    // Exemplo de uso do play_flamengo_anthem
-    play_flamengo_anthem(BUZZER_PIN); // Toca o hino do Flamengo
+    // Testa o buzzer 1
+    test_buzzer(BUZZER_PIN);
+
+    // Testa o buzzer 2
+    test_buzzer(BUZZER_PIN2);
 
     // Loop infinito
     while (true)
     {
         // Verifica o estado do botão
-        if (gpio_get(BUTTON_PIN) == 0){   
-            
+        if (gpio_get(BUTTON_PIN) == 0)
+        {
+
             // Botão pressionado (nível lógico baixo)
             printf("Button pressed\n");
 
-            // Exemplo de uso do countdown_beep
-            countdown_beep(BUZZER_PIN, 10, 1000);
+            // Melodia para o buzzer A (notas em Hz)
+            uint melody_A[] = {392, 392, 0, 311, 466, 392, 0, 466, 392, 587, 587, 0, 622, 466, 369, 0, 466, 392};
 
-            // Exemplo de uso do playMelody
-            uint melody[] = {262, 294, 330, 349, 392, 440, 494, 523};    // Notas da escala musical
-            uint durations[] = {500, 500, 500, 500, 500, 500, 500, 500}; // Duração de cada nota
-            playMelody(BUZZER_PIN, melody, durations, 8);                // Toca a melodia
+            // Melodia para o buzzer B (notas em Hz)
+            uint melody_B[] = {0, 392, 392, 311, 0, 0, 311, 0, 0, 0, 587, 587, 0, 0, 0, 311, 0, 392};
+
+            // Duração das notas (em ms)
+            uint durations[] = {200, 200, 200, 150, 100, 200, 150, 100, 400, 200, 200, 200, 150, 100, 200, 150, 100, 400};
+
+            // Tocar a melodia
+            play_two_buzzer(BUZZER_PIN, BUZZER_PIN2, melody_A, melody_B, durations, sizeof(melody_A) / sizeof(melody_A[0]));
+
+            // Toca a melodia Marcha Imperial
+            marcha_imperial();
+
+            // Exemplo de uso do play_flamengo_anthem
+            play_flamengo_anthem(BUZZER_PIN); // Toca o hino do Flamengo
         }
     }
 
